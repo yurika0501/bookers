@@ -1,4 +1,6 @@
-  <p id="notice"></p>
+  <div>
+    <%= flash[:notice] %>
+  </div>
   <h1>Books</h1>
 
   <table>　<!--テーブルタグ-->
@@ -20,8 +22,8 @@
           <td><%= book.body %></tb>
           <td><%= link_to 'Show', book %></td>
           <td><%= link_to 'Edit', edit_book_path(book) %></td>
-          <!--下記の記述がよく分からない-->
-          <td><%= link_to 'Destroy', book, method: :delete, date: { confirm: 'Are you sure?' } %></td>
+          <!--下記からエラー。7章確認しながら書いたコントローラー記述は合ってる？-->
+          <td><%= link_to 'Destroy', book_path(@book.id), method: :delete, "data-confirm" => "Do you really want to delete it?" %></td>
         </tr>
       <% end %>
     </tbody>
