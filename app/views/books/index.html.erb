@@ -3,7 +3,7 @@
   </div>
   <h1>Books</h1>
 
-  <table>　<!--テーブルタグ-->
+  <table><!--テーブルタグ-->
     <thead> <!--表の行（水平方向）をグループ化するタグ-->
       <tr>  <!--表内でセルの行を定義-->
         <th>Title</th> <!--trタグ内の見出しセルを定義-->
@@ -15,7 +15,6 @@
 
     <tbody>
       <!--投稿して保存されたデータを読み込み-->
-      <!--postの部分もしかしてbook-->
       <% @books.each do |book| %>
         <tr>
           <td><%= book.title %></tb> <!--tdは、テーブルセルの内容を指定-->
@@ -23,13 +22,44 @@
           <td><%= link_to 'Show', book %></td>
           <td><%= link_to 'Edit', edit_book_path(book) %></td>
           <!--下記からエラー。7章確認しながら書いたコントローラー記述は合ってる？-->
-          <td><%= link_to 'Destroy', book_path(@book.id), method: :delete, "data-confirm" => "Do you really want to delete it?" %></td>
+          <!--削除する前に本当に削除しますか？を出したい-->
+          <td><%= link_to 'Destroy', destroy_book_path(book.id), method: :delete, "data-confirm" => "Do you really want to delete it?" %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
 
+<!--以下からnew記述。投稿フォーム-->
+<body>
+  <h2>New book</h2>
+  <!--バリデーション-->
+  <% if @book.errors.any? %>
+    <%= @book.errors.count %> save error
+    <ul>
+      <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <!-- form_with部分 -->
+  <%= form_with model: @book do |f| %>
 
+    <div class="field">
+      <label for="book-title">Title</label>
+      <%= f.text_field :title %>
+    </div>
+
+    <div class="field">
+      <label for="book-body">Body</label>
+      <%= f.text_area :body %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit 'Create Book' %>
+    </div>
+
+  <% end %>
+</body>
 <!--  <body>-->
 
 
